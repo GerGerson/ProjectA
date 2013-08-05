@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => 'promoalliance.db.10017492.hostedresource.com',
+			'database'  => 'promoalliance',
+			'username'  => 'promoalliance',
+			'password'  => 'zaq1@#EDCXSW',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
