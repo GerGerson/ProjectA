@@ -14,10 +14,23 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+	
+	protected $layout = 'layouts.master';
 
 	public function showWelcome()
 	{
 		return View::make('hello');
+	}
+	
+	public function templateTest(){
+		$mids = DB::table('template')
+								->join('module', 'template.m_id', '=', 'module.m_id')
+								->select('module.m_id', 'module.path')
+								->where('template.t_id', 1)
+								->where('module.type_id', 1)
+								->get();
+	
+		$this->layout->content = View::make('test', array('mids' => $mids));
 	}
 
 }
