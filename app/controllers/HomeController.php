@@ -16,10 +16,15 @@ class HomeController extends BaseController {
 	*/
 	
 	protected $layout = 'layouts.master';
-
+	protected $layout_main = 'index';
+	
 	public function showWelcome()
 	{
 		return View::make('hello');
+	}
+	
+	public function showMain(){
+		$this->layout_main->content = View::make('layouts.top_menu');
 	}
 	
 	public function templateTest(){
