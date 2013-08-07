@@ -16,4 +16,7 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('/Main', 'HomeController@showMain');
+Route::get('/Main', function()
+{
+	return View::make('index')->nest('top_menu', 'menu.top_menu');
+});
