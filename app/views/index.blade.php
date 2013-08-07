@@ -17,6 +17,7 @@
 	<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="assets/css/4son.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	<link rel="shortcut icon" href="favicon.ico" />
@@ -24,7 +25,71 @@
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="page-header-fixed page-full-width">
-	@yield('top_menu')
+<div id="fb-root"></div>
+	<script>
+	  window.fbAsyncInit = function() {
+	  FB.init({
+		appId      : '625779757441110', // App ID
+		channelUrl : '//WWW.carkeyli.com/jasonpro', // Channel File
+		status     : true, // check login status
+		cookie     : true, // enable cookies to allow the server to access the session
+		xfbml      : true  // parse XFBML
+	  });
+
+	  // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+	  // for any authentication related change, such as login, logout or session refresh. This means that
+	  // whenever someone who was previously logged out tries to log in again, the correct case below 
+	  // will be handled. 
+	  FB.Event.subscribe('auth.authResponseChange', function(response) {
+		// Here we specify what we do with the response anytime this event occurs. 
+		if (response.status === 'connected') {
+		  // The response object is returned with a status field that lets the app know the current
+		  // login status of the person. In this case, we're handling the situation where they 
+		  // have logged in to the app.
+		  
+		  loginSuccess();
+		} else if (response.status === 'not_authorized') {
+		  // In this case, the person is logged into Facebook, but not into the app, so we call
+		  // FB.login() to prompt them to do so. 
+		  // In real-life usage, you wouldn't want to immediately prompt someone to login 
+		  // like this, for two reasons:
+		  // (1) JavaScript created popup windows are blocked by most browsers unless they 
+		  // result from direct interaction from people using the app (such as a mouse click)
+		  // (2) it is a bad experience to be continually prompted to login upon page load.
+		  FB.login();
+		} else {
+		  // In this case, the person is not logged into Facebook, so we call the login() 
+		  // function to prompt them to do so. Note that at this stage there is no indication
+		  // of whether they are logged into the app. If they aren't then they'll see the Login
+		  // dialog right after they log in to Facebook. 
+		  // The same caveats as above apply to the FB.login() call here.
+		  FB.login();
+		}
+	  });
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d){
+	   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	   if (d.getElementById(id)) {return;}
+	   js = d.createElement('script'); js.id = id; js.async = true;
+	   js.src = "//connect.facebook.net/en_US/all.js";
+	   ref.parentNode.insertBefore(js, ref);
+	  }(document));
+
+	  // Here we run a very simple test of the Graph API after login is successful. 
+	  // This testAPI() function is only called in those cases. 
+	  function loginSuccess() {
+		console.log('Welcome!  Fetching your information.... ');
+		FB.api('/me', function(response) {
+		  console.log("<img src='https://graph.facebook.com/" + response.id + "/picture'>");
+		  $('#fb_login').empty();
+		  $('#fb_login').prepend("<img style='margin-top:-5px;height:50%;width:50%' src='https://graph.facebook.com/" + response.id + "/picture'>");
+		  //document.getElementById("fb_login").innerHtml = "<img src='https://graph.facebook.com/" + response.id + "/picture'>";
+		  console.log('Good to see you, ' + response.name + '.');
+		});
+	  }
+	</script>
 
 	<!-- BEGIN HEADER -->
 	<div class="header navbar navbar-inverse navbar-fixed-top">
@@ -33,354 +98,21 @@
 			<div class="container-fluid">
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="index.html">
-				<img src="assets/img/logo.png" alt="logo" />
+					<img src="assets/img/logo.png" alt="logo" />
 				</a>
 				<!-- END LOGO -->
-				<!-- BEGIN HORIZANTAL MENU -->
-				<div class="navbar hor-menu hidden-phone hidden-tablet">
-					<div class="navbar-inner">
-						<ul class="nav">
-							<li class="visible-phone visible-tablet">
-								<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-								<form class="sidebar-search">
-									<div class="input-box">
-										<a href="javascript:;" class="remove"></a>
-										<input type="text" placeholder="Search..." />            
-										<input type="button" class="submit" value=" " />
-									</div>
-								</form>
-								<!-- END RESPONSIVE QUICK SEARCH FORM -->
-							</li>
-							<li>
-								<a href="index.html">
-								Dashboard
-								</a>
-							</li>
-							<li  class="active">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-								<span class="selected"></span>
-								Layouts
-								<span class="arrow"></span>     
-								</a>
-								<ul class="dropdown-menu">
-									<li >
-										<a href="layout_horizontal_sidebar_menu.html">
-										Horzontal & Sidebar Menu                     </a>
-									</li>
-									<li >
-										<a href="layout_horizontal_menu1.html">
-										Horzontal Menu 1                    </a>
-									</li>
-									<li class="active">
-										<a href="layout_horizontal_menu2.html">
-										Horzontal Menu 2                    </a>
-									</li>
-									<li >
-										<a href="layout_promo.html">
-										Promo Page                    </a>
-									</li>
-									<li >
-										<a href="layout_email.html">
-										Email Templates                     </a>
-									</li>
-									<li >
-										<a href="layout_ajax.html">
-										Content Loading via Ajax</a>
-									</li>
-									<li >
-										<a href="layout_sidebar_closed.html">
-										Sidebar Closed Page                    </a>
-									</li>
-									<li >
-										<a href="layout_blank_page.html">
-										Blank Page                    </a>
-									</li>
-									<li >
-										<a href="layout_boxed_page.html">Boxed Page</a>
-									</li>
-									<li >
-										<a href="layout_boxed_not_responsive.html">
-										Non-Responsive Boxed Layout                     </a>
-									</li>
-									<li class="dropdown-submenu">
-										<a tabindex="-1" href="javascript:;">
-										More options
-										<span class="arrow"></span>
-										</a>
-										<ul class="dropdown-menu">
-											<li><a tabindex="-1" href="#">Second level link</a></li>
-											<li class="dropdown-submenu">
-												<a tabindex="-1" href="javascript:;">More options<span class="arrow"></span></a>
-												<ul class="dropdown-menu">
-													<li><a tabindex="-1" href="index.html">Third level link</a></li>
-													<li><a tabindex="-1" href="index.html">Third level link</a></li>
-													<li><a tabindex="-1" href="index.html">Third level link</a></li>
-													<li><a tabindex="-1" href="index.html">Third level link</a></li>
-													<li><a tabindex="-1" href="index.html">Third level link</a></li>
-												</ul>
-											</li>
-											<li><a tabindex="-1" href="index.html">Second level link</a></li>
-											<li><a tabindex="-1" href="index.html">Second level link</a></li>
-											<li><a tabindex="-1" href="index.html">Second level link</a></li>
-										</ul>
-									</li>
-								</ul>
-								<b class="caret-out"></b>                        
-							</li>
-							<li>
-								<a href="">Tables</a>
-							</li>
-							<li>
-								<a data-toggle="dropdown" class="dropdown-toggle" href="">Extra
-								<span class="arrow"></span>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a href="index.html">About Us</a></li>
-									<li><a href="index.html">Services</a></li>
-									<li><a href="index.html">Pricing</a></li>
-									<li><a href="index.html">FAQs</a></li>
-									<li><a href="index.html">Gallery</a></li>
-									<li><a href="index.html">Registration</a></li>
-									<li><a href="index.html">2 Columns (Left)</a></li>
-									<li><a href="index.html">2 Columns (Right)</a></li>
-								</ul>
-								<b class="caret-out"></b>                        
-							</li>
-							<li>
-								<span class="hor-menu-search-form-toggler">&nbsp;</span>
-								<div class="search-form hidden-phone hidden-tablet">
-									<form class="form-search">
-										<div class="input-append">
-											<input type="text" placeholder="Search..." class="m-wrap">
-											<button type="button" class="btn"></button>
-										</div>
-									</form>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- END HORIZANTAL MENU -->
+				
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
 				<img src="assets/img/menu-toggler.png" alt="" />
-				</a>          
-				<!-- END RESPONSIVE MENU TOGGLER -->            
+				</a>				
+				<!-- END RESPONSIVE MENU TOGGLER -->  
+				
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				<ul class="nav pull-right">
-					<!-- BEGIN NOTIFICATION DROPDOWN -->   
-					<li class="dropdown" id="header_notification_bar">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-warning-sign"></i>
-						<span class="badge">6</span>
-						</a>
-						<ul class="dropdown-menu extended notification">
-							<li>
-								<p>You have 14 new notifications</p>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-success"><i class="icon-plus"></i></span>
-								New user registered. 
-								<span class="time">Just now</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-important"><i class="icon-bolt"></i></span>
-								Server #12 overloaded. 
-								<span class="time">15 mins</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-warning"><i class="icon-bell"></i></span>
-								Server #2 not respoding.
-								<span class="time">22 mins</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-info"><i class="icon-bullhorn"></i></span>
-								Application error.
-								<span class="time">40 mins</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-important"><i class="icon-bolt"></i></span>
-								Database overloaded 68%. 
-								<span class="time">2 hrs</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="label label-important"><i class="icon-bolt"></i></span>
-								2 user IP blocked.
-								<span class="time">5 hrs</span>
-								</a>
-							</li>
-							<li class="external">
-								<a href="#">See all notifications <i class="m-icon-swapright"></i></a>
-							</li>
-						</ul>
+					<li>
+						@yield('top_menu')
 					</li>
-					<!-- END NOTIFICATION DROPDOWN -->
-					<!-- BEGIN INBOX DROPDOWN -->
-					<li class="dropdown" id="header_inbox_bar">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-envelope"></i>
-						<span class="badge">5</span>
-						</a>
-						<ul class="dropdown-menu extended inbox">
-							<li>
-								<p>You have 12 new messages</p>
-							</li>
-							<li>
-								<a href="inbox.html?a=view">
-								<span class="photo"><img src="./assets/img/avatar2.jpg" alt="" /></span>
-								<span class="subject">
-								<span class="from">Lisa Wong</span>
-								<span class="time">Just Now</span>
-								</span>
-								<span class="message">
-								Vivamus sed auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
-								</a>
-							</li>
-							<li>
-								<a href="inbox.html?a=view">
-								<span class="photo"><img src="./assets/img/avatar3.jpg" alt="" /></span>
-								<span class="subject">
-								<span class="from">Richard Doe</span>
-								<span class="time">16 mins</span>
-								</span>
-								<span class="message">
-								Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
-								</a>
-							</li>
-							<li>
-								<a href="inbox.html?a=view">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt="" /></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
-								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
-								</a>
-							</li>
-							<li class="external">
-								<a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
-							</li>
-						</ul>
-					</li>
-					<!-- END INBOX DROPDOWN -->
-					<!-- BEGIN TODO DROPDOWN -->
-					<li class="dropdown" id="header_task_bar">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-tasks"></i>
-						<span class="badge">5</span>
-						</a>
-						<ul class="dropdown-menu extended tasks">
-							<li>
-								<p>You have 12 pending tasks</p>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">New release v1.2</span>
-								<span class="percent">30%</span>
-								</span>
-								<span class="progress progress-success ">
-								<span style="width: 30%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Application deployment</span>
-								<span class="percent">65%</span>
-								</span>
-								<span class="progress progress-danger progress-striped active">
-								<span style="width: 65%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile app release</span>
-								<span class="percent">98%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 98%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Database migration</span>
-								<span class="percent">10%</span>
-								</span>
-								<span class="progress progress-warning progress-striped">
-								<span style="width: 10%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li class="external">
-								<a href="#">See all tasks <i class="m-icon-swapright"></i></a>
-							</li>
-						</ul>
-					</li>
-					<!-- END TODO DROPDOWN -->
-					<!-- BEGIN USER LOGIN DROPDOWN -->
-					<li class="dropdown user">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img alt="" src="assets/img/avatar1_small.jpg" />
-						<span class="username">Bob Nilson</span>
-						<i class="icon-angle-down"></i>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a></li>
-							<li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
-							<li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox(3)</a></li>
-							<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
-							<li class="divider"></li>
-							<li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a></li>
-							<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
-						</ul>
-					</li>
-					<!-- END USER LOGIN DROPDOWN -->
 				</ul>
 				<!-- END TOP NAVIGATION MENU --> 
 			</div>

@@ -17,5 +17,3 @@ Route::get('/', function()
 });
 
 Route::get('/Main', 'HomeController@showMain');
-
-Route::get('/Test', 'HomeController@templateTest');

@@ -15,8 +15,7 @@ class HomeController extends BaseController {
 	|
 	*/
 	
-	protected $layout = 'layouts.master';
-	protected $layout_main = 'index';
+	protected $layout = 'index';
 	
 	public function showWelcome()
 	{
@@ -24,18 +23,6 @@ class HomeController extends BaseController {
 	}
 	
 	public function showMain(){
-		$this->layout_main->content = View::make('layouts.top_menu');
+		$this->layout->content = View::make('layouts.menu');
 	}
-	
-	public function templateTest(){
-		$mids = DB::table('template')
-								->join('module', 'template.m_id', '=', 'module.m_id')
-								->select('module.m_id', 'module.path')
-								->where('template.t_id', 1)
-								->where('module.type_id', 1)
-								->get();
-	
-		$this->layout->content = View::make('test', array('mids' => $mids));
-	}
-
 }
