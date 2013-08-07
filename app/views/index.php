@@ -47,7 +47,7 @@
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				<ul class="nav pull-right">
 					<li>
-						<?php echo $top_menu; ?>
+						<?php echo $top; ?>
 					</li>
 				</ul>
 				<!-- END TOP NAVIGATION MENU --> 

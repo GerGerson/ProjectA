@@ -18,5 +18,5 @@ Route::get('/', function()
 
 Route::get('/Main', function()
 {
-	return View::make('index')->nest('top_menu', 'menu.top_menu');
+	return View::make('index')->nest('top', 'menu.top_menu');
 });
