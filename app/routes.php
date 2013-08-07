@@ -20,3 +20,6 @@ Route::get('/Main', function()
 {
 	return View::make('index')->nest('top', 'menu.top_menu');
 });
+
+//Session
+Route::post('/setSession', "sessionController@setSession");

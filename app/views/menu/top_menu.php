@@ -1,10 +1,3 @@
-<html>
-<head>
-
-	<link href="assets/css/4son.css" rel="stylesheet" type="text/css"/>
-
-</head>
-<body>
 	<div id="fb-root"></div>
 	<script>
 	  window.fbAsyncInit = function() {
@@ -56,7 +49,7 @@
 	   js.src = "//connect.facebook.net/en_US/all.js";
 	   ref.parentNode.insertBefore(js, ref);
 	  }(document));
-
+  
 	  // Here we run a very simple test of the Graph API after login is successful. 
 	  // This testAPI() function is only called in those cases. 
 	  function loginSuccess() {
@@ -67,14 +60,55 @@
 		  $('#fb_login').prepend("<img style='margin-top:-5px;height:50%;width:50%' src='https://graph.facebook.com/" + response.id + "/picture'>");
 		  //document.getElementById("fb_login").innerHtml = "<img src='https://graph.facebook.com/" + response.id + "/picture'>";
 		  console.log('Good to see you, ' + response.name + '.');
+		  
+		  var sess = <?php echo $_SESSION['f_id'];?>;
+		  console.log(sess);
+		  
+		  if (sess == "" || sess == null){
+			$.post("/setSession", {
+				sessName : 'f_id',
+				sessVal : response.id,
+			})
+			.done(function(data){console.log(data + " : done");})
+			.fail(function(){console.log("fail");});
+			  
+			window.location.href = "/Main";
+		  }
+		  
 		});
 	  }
 	</script>
-
-	<div class="login" id="fb_login">
-		<img class='fbPicture' src='/assets/img/login.png'>
-		<a class="link" href="/Main">Login</a>
+	
+	<!-- BEGIN HEADER -->
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<!-- BEGIN LOGO -->
+				<a class="brand" href="index.html">
+					<img src="assets/img/logo.png" alt="logo" />
+				</a>
+				<!-- END LOGO -->
+				
+				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+					<img src="assets/img/menu-toggler.png" alt="" />
+				</a>				
+				<!-- END RESPONSIVE MENU TOGGLER -->  
+				
+				<!-- BEGIN TOP NAVIGATION MENU -->              
+				<ul class="nav pull-right">
+					<li>
+						<div class="login" id="fb_login">
+							<img class='fbPicture' src='/assets/img/login.png'>
+							<a class="link" href="#" onclick="FB.login()">Login</a>
+						</div>
+					</li>
+				</ul>
+				<!-- END TOP NAVIGATION MENU --> 
+			</div>
+		</div>
+		<!-- END TOP NAVIGATION BAR -->
 	</div>
-
-</body>
-</html>
+	
+	

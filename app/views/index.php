@@ -27,35 +27,9 @@
 <body class="page-header-fixed page-full-width">
 
 
-	<!-- BEGIN HEADER -->
-	<div class="header navbar navbar-inverse navbar-fixed-top">
-		<!-- BEGIN TOP NAVIGATION BAR -->
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<!-- BEGIN LOGO -->
-				<a class="brand" href="index.html">
-					<img src="assets/img/logo.png" alt="logo" />
-				</a>
-				<!-- END LOGO -->
-				
-				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-				<img src="assets/img/menu-toggler.png" alt="" />
-				</a>				
-				<!-- END RESPONSIVE MENU TOGGLER -->  
-				
-				<!-- BEGIN TOP NAVIGATION MENU -->              
-				<ul class="nav pull-right">
-					<li>
-						<?php echo $top; ?>
-					</li>
-				</ul>
-				<!-- END TOP NAVIGATION MENU --> 
-			</div>
-		</div>
-		<!-- END TOP NAVIGATION BAR -->
-	</div>
-	<!-- END HEADER -->
+	<!-- TOP NAVIGATION BAR -->
+	<?php echo $top; ?>
+	
 	<!-- BEGIN CONTAINER -->   
 	<div class="page-container row-fluid">
 		<!-- BEGIN EMPTY PAGE SIDEBAR -->
